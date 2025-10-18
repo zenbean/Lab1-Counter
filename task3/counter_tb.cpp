@@ -25,13 +25,15 @@ int main(int argc, char **argv, char **env){
     // initialise initial signal levels for simulation inputs
     top->clk=1;
     top->rst=1;
-    top->v=4;
+    top->v=0;
     top->ld=0;
 
     // run simulation for many clock cycles - this is where simulation happens
     for (i = 0; i < 2000; i++) {
     top->rst = (i < 2) || (i == 17);
     top->ld  = vbdFlag();
+
+    if (top->ld) top->v = vbdValue();
 
         for (clk = 0; clk < 2; clk++) {
             tfp->dump(2*i + clk);
